@@ -34,7 +34,7 @@ int main() {
 #endif
 
     // Request Window from Operating System
-    GLFWwindow* window = glfwCreateWindow(800, 600, "LearnOpenGL", nullptr, nullptr);
+    GLFWwindow* window{ glfwCreateWindow(800, 600, "LearnOpenGL", nullptr, nullptr)};
     if (window == nullptr)
     {
         cout << "Failed to create GLFW window" << endl;
@@ -58,7 +58,7 @@ int main() {
     // Initialization ends here
     // ==================================================================
     // The Real Program starts here
-    float red = 0;
+    float red{};
 
     // ----- Create Vertex Array Object, which makes changing between VBOs easier -----
     unsigned int VAO1;
@@ -67,7 +67,7 @@ int main() {
 
    
     // ----- Create Array Buffer on the GPU and copy our vertices to GPU -------
-    float vertices[] = {
+    float vertices[] {
        -0.75f, -0.75f, 0.0f,
         0.25f, -0.75f, 0.0f,
        -0.25f,  0.25f, 0.0f
@@ -88,7 +88,7 @@ int main() {
     glGenVertexArrays(1, &VAO2);
     glBindVertexArray(VAO2);
 
-    float vertices2[] = {
+    float vertices2[] {
         0.25f, -0.75f, 0.0f,
         0.75f, -0.75f, 0.0f,
         0.50f,  0.50f, 0.0f
@@ -107,24 +107,24 @@ int main() {
 
     // ----- Compile the Vertex Shader on the GPU -------
 
-    const char* vertexShaderSource = "#version 330 core\n"
+    const char* vertexShaderSource{ "#version 330 core\n"
         "layout (location = 0) in vec3 aPos;\n"
         "void main()\n"
         "{\n"
         "   gl_Position = vec4(aPos.x, aPos.y, aPos.z, 1.0);\n"
-        "}\0";
+        "}\0" };
     unsigned int vertexShader;
     vertexShader = glCreateShader(GL_VERTEX_SHADER);
     glShaderSource(vertexShader, 1, &vertexShaderSource, NULL);
     glCompileShader(vertexShader);
 
     // ------ Compile the Fragment Shader on the GPU --------
-    const char* orangefragmentShaderSource = "#version 330 core\n"
+    const char* orangefragmentShaderSource{ "#version 330 core\n"
         "out vec4 FragColor;\n"
         "void main()\n"
         "{\n"
         "    FragColor = vec4(1.0f, 0.5f, 0.2f, 1.0f);\n"
-        "} \0";
+        "} \0" };
     unsigned int orangefragmentShader;
     orangefragmentShader = glCreateShader(GL_FRAGMENT_SHADER);
     glShaderSource(orangefragmentShader, 1, &orangefragmentShaderSource, NULL);
@@ -142,12 +142,12 @@ int main() {
 
     //----------------new coloreeee
         
-        const char* yellowfragmentShaderSource = "#version 330 core\n"
-        "out vec4 FragColor;\n"
-        "void main()\n"
-        "{\n"
-        "    FragColor = vec4(1.0f, 1.0f, 0.0f, 1.0f);\n"
-        "} \0";
+    const char* yellowfragmentShaderSource{ "#version 330 core\n"
+    "out vec4 FragColor;\n"
+    "void main()\n"
+    "{\n"
+    "    FragColor = vec4(1.0f, 1.0f, 0.0f, 1.0f);\n"
+    "} \0" };
     unsigned int yellowfragmentShader;
     yellowfragmentShader = glCreateShader(GL_FRAGMENT_SHADER);
     glShaderSource(yellowfragmentShader, 1, &yellowfragmentShaderSource, NULL);
