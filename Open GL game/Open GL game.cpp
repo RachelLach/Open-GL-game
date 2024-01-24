@@ -61,26 +61,49 @@ int main() {
     float red = 0;
 
     // ----- Create Vertex Array Object, which makes changing between VBOs easier -----
-    unsigned int VAO;
-    glGenVertexArrays(1, &VAO);
-    glBindVertexArray(VAO);
+    unsigned int VAO1;
+    glGenVertexArrays(1, &VAO1);
+    glBindVertexArray(VAO1);
 
+   
     // ----- Create Array Buffer on the GPU and copy our vertices to GPU -------
     float vertices[] = {
        -0.75f, -0.75f, 0.0f,
         0.25f, -0.75f, 0.0f,
-       -0.25f,  0.25f, 0.0f,
+       -0.25f,  0.25f, 0.0f
+    };
 
+    unsigned int VBO1; // variable to store buffer id
+    glGenBuffers(1, &VBO1); // ask open gl to create a buffer
+    glBindBuffer(GL_ARRAY_BUFFER, VBO1); // tell gl to use this buffer
+    glBufferData(GL_ARRAY_BUFFER, // copy our vertices to the buffer
+        sizeof(vertices), vertices, GL_STATIC_DRAW);
+
+    // ------ configure vertex attribute(s) (currently it's just one, the position) -----
+    // so the vertex shader understands, where to find the input attributes, in this case position
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
+    glEnableVertexAttribArray(0);
+
+    unsigned int VAO2;
+    glGenVertexArrays(1, &VAO2);
+    glBindVertexArray(VAO2);
+
+    float vertices2[] = {
         0.25f, -0.75f, 0.0f,
         0.75f, -0.75f, 0.0f,
         0.50f,  0.50f, 0.0f
     };
 
-    unsigned int VBO; // variable to store buffer id
-    glGenBuffers(1, &VBO); // ask open gl to create a buffer
-    glBindBuffer(GL_ARRAY_BUFFER, VBO); // tell gl to use this buffer
-    glBufferData(GL_ARRAY_BUFFER, // copy our vertices to the buffer
-        sizeof(vertices), vertices, GL_STATIC_DRAW);
+    unsigned int VBO2; // variable to store buffer id
+    glGenBuffers(1, &VBO2); // ask open gl to create a buffer
+    glBindBuffer(GL_ARRAY_BUFFER, VBO2); // tell gl to use this buffer
+    glBufferData(GL_ARRAY_BUFFER, // copy our vertices to the buffer 
+        sizeof(vertices2), vertices2, GL_STATIC_DRAW);
+
+    // ------ configure vertex attribute(s) (currently it's just one, the position) -----
+    // so the vertex shader understands, where to find the input attributes, in this case position
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
+    glEnableVertexAttribArray(0);
 
     // ----- Compile the Vertex Shader on the GPU -------
 
@@ -96,32 +119,49 @@ int main() {
     glCompileShader(vertexShader);
 
     // ------ Compile the Fragment Shader on the GPU --------
-    const char* fragmentShaderSource = "#version 330 core\n"
+    const char* orangefragmentShaderSource = "#version 330 core\n"
         "out vec4 FragColor;\n"
         "void main()\n"
         "{\n"
         "    FragColor = vec4(1.0f, 0.5f, 0.2f, 1.0f);\n"
         "} \0";
-    unsigned int fragmentShader;
-    fragmentShader = glCreateShader(GL_FRAGMENT_SHADER);
-    glShaderSource(fragmentShader, 1, &fragmentShaderSource, NULL);
-    glCompileShader(fragmentShader);
+    unsigned int orangefragmentShader;
+    orangefragmentShader = glCreateShader(GL_FRAGMENT_SHADER);
+    glShaderSource(orangefragmentShader, 1, &orangefragmentShaderSource, NULL);
+    glCompileShader(orangefragmentShader);
 
     // -------- Create Shader Program (Render Pipeline) ---------
-    unsigned int shaderProgram;
-    shaderProgram = glCreateProgram();
-    glAttachShader(shaderProgram, vertexShader);
-    glAttachShader(shaderProgram, fragmentShader);
-    glLinkProgram(shaderProgram);
-    glUseProgram(shaderProgram);
+    unsigned int orangeshaderProgram;
+    orangeshaderProgram = glCreateProgram();
+    glAttachShader(orangeshaderProgram, vertexShader);
+    glAttachShader(orangeshaderProgram, orangefragmentShader);
+    glLinkProgram(orangeshaderProgram);
     // clean up shaders after they've been linked into a program
     glDeleteShader(vertexShader);
-    glDeleteShader(fragmentShader);
+    glDeleteShader(orangefragmentShader);
 
-    // ------ configure vertex attribute(s) (currently it's just one, the position) -----
-    // so the vertex shader understands, where to find the input attributes, in this case position
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
-    glEnableVertexAttribArray(0);
+    //----------------new coloreeee
+        
+        const char* yellowfragmentShaderSource = "#version 330 core\n"
+        "out vec4 FragColor;\n"
+        "void main()\n"
+        "{\n"
+        "    FragColor = vec4(1.0f, 1.0f, 0.0f, 1.0f);\n"
+        "} \0";
+    unsigned int yellowfragmentShader;
+    yellowfragmentShader = glCreateShader(GL_FRAGMENT_SHADER);
+    glShaderSource(yellowfragmentShader, 1, &yellowfragmentShaderSource, NULL);
+    glCompileShader(yellowfragmentShader);
+
+    // -------- Create Shader Program (Render Pipeline) ---------
+    unsigned int yellowshaderProgram;
+    yellowshaderProgram = glCreateProgram();
+    glAttachShader(yellowshaderProgram, vertexShader);
+    glAttachShader(yellowshaderProgram, yellowfragmentShader);
+    glLinkProgram(yellowshaderProgram);
+    // clean up shaders after they've been linked into a program
+    glDeleteShader(yellowfragmentShader);
+    
 
     // While the User doesn't want to Quit (X Button, Alt+F4)
     while (!glfwWindowShouldClose(window))
@@ -137,7 +177,14 @@ int main() {
         glClearColor(red, 0.3f, 0.3f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT);
 
-        glDrawArrays(GL_TRIANGLES, 0, 6);
+
+        glUseProgram(orangeshaderProgram);
+        glBindVertexArray(VAO1);
+        glDrawArrays(GL_TRIANGLES, 0, 3);
+
+        glUseProgram(yellowshaderProgram);
+        glBindVertexArray(VAO2);
+        glDrawArrays(GL_TRIANGLES, 0, 3);
 
 
         // present (send the current frame to the computer screen)
