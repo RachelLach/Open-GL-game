@@ -18,43 +18,7 @@ void error_callback(int error, const char* msg) {
 
 int main() {
 
-    glfwSetErrorCallback(error_callback);
-
-    // Initialize GLFW
-    if (!glfwInit()) { // Exit, if it failed
-        cout << "Failed to init GLFW" << endl;
-        return -1;
-    }
-
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
-    glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
-#if __APPLE__
-    glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
-#endif
-
-    // Request Window from Operating System
-    GLFWwindow* window{ glfwCreateWindow(800, 600, "LearnOpenGL", nullptr, nullptr)};
-    if (window == nullptr)
-    {
-        cout << "Failed to create GLFW window" << endl;
-        glfwTerminate();
-        return -1;
-    }
-    glfwMakeContextCurrent(window);
-
-    // Initialize GLAD (connects OpenGL Functions)
-    if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
-    {
-        cout << "Failed to initialize GLAD" << endl;
-        glfwTerminate();
-        return -1;
-    }
-    glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
-    int width, height;
-    glfwGetFramebufferSize(window, &width, &height);
-    glViewport(0, 0, width, height);
-
+   
     // Initialization ends here
     // ==================================================================
     // The Real Program starts here
