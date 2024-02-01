@@ -234,7 +234,7 @@
     <None Include="blendTexturesFragmentShader.glsl" />
     <None Include="orangeFragmentShader.glsl" />
     <None Include="textureFragmentShader.glsl" />
-    <None Include="vertexShader.glsl" />
+    <None Include="VertexShader.glsl" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

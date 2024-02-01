@@ -4,13 +4,16 @@
 
 class Texture
 {
-public: Texture(const char*imagepath, int textureUnit) {
+public: 
+    
+    
+    unsigned int textureId;
+    Texture(const char*imagepath, int textureUnit) {
     int width, height, nrChannels;
 
     unsigned char* data = stbi_load(imagepath,
         &width, &height, &nrChannels, 0);
 
-    unsigned int textureId;
 
     glActiveTexture(textureUnit);
     glGenTextures(1, &textureId);

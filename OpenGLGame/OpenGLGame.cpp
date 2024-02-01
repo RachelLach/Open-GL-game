@@ -55,6 +55,7 @@ int main() {
 
     Shader vertexShader{ "vertexShader.glsl", GL_VERTEX_SHADER };
 
+
     Shader orangeShader{
         "orangeFragmentShader.glsl", GL_FRAGMENT_SHADER
     };
@@ -63,7 +64,7 @@ int main() {
         "orangeFragmentShader.glsl", GL_FRAGMENT_SHADER
     };
 
-    Shader textureShader{
+    Shader textureFragmentShader{
         "blendTexturesFragmentShader.glsl", GL_FRAGMENT_SHADER
     };
 
@@ -71,13 +72,17 @@ int main() {
     // -------- Create Orange Shader Program (Render Pipeline) ---------
     Material orange{ vertexShader, orangeShader };
     Material yellow{ vertexShader, yellowShader };
-    Material textured{ vertexShader, textureShader };
+    Material textured{ vertexShader, textureFragmentShader };
 
     Triangle a{ &orange, &mesh1 };
     a.red = 1;
     Triangle b{ &orange, &mesh2 };
     b.red = 0.5f;
-    Triangle c{ &textured, &mesh3 };
+    Triangle c{ &textured, &mesh3, &container };
+    c.horizontalOffset = -0.5f;
+    Triangle d{ &textured, &mesh3, &wall };
+    d.horizontalOffset = +0.5f;
+
 
     //glPolygonMode( GL_FRONT_AND_BACK, GL_LINE );
 
@@ -94,6 +99,7 @@ int main() {
         //c.horizontalOffset = cos(glfwGetTime());
 
         c.render();
+        d.render();
 
         window.present();
     }
