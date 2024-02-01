@@ -26,6 +26,14 @@ public:
         int offsetLocation = glGetUniformLocation(
             material->shaderProgram, "horizontalOffset");
         glUniform1f(offsetLocation, horizontalOffset);
+
+        int diffuseLocation = glGetUniformLocation(
+            material->shaderProgram, "diffuseTexture");
+        glUniform1i(diffuseLocation, 0);
+
+        int blendLocation = glGetUniformLocation(
+            material->shaderProgram, "blendTexture");
+        glUniform1i(blendLocation, 1);
         
         mesh->render();
     }
