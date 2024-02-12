@@ -1,3 +1,4 @@
+#define _USE_MATH_DEFINES
 
 #include <iostream>
 #include "glad/glad.h"
@@ -9,6 +10,7 @@
 #include "Triangle.h"
 #include "stb_image.h"
 #include "Texture.h"
+#include <math.h>
 
 using namespace std;
 
@@ -79,9 +81,11 @@ int main() {
     Triangle b{ &orange, &mesh2 };
     b.red = 0.5f;
     Triangle c{ &textured, &mesh3, &container };
-    c.horizontalOffset = -0.5f;
+    c.position = Vector3(-0.75f, 0, 0);
+    //c.horizontalOffset = -0.5f;
     Triangle d{ &textured, &mesh3, &wall };
-    d.horizontalOffset = +0.5f;
+    d.position = Vector3(0.75f, 0, 0);
+    //d.horizontalOffset = +0.5f;
 
 
     //glPolygonMode( GL_FRONT_AND_BACK, GL_LINE );
@@ -93,6 +97,9 @@ int main() {
 
         window.clear();
 
+        d.rotation.y = glfwGetTime();
+        c.rotation.z = glfwGetTime();
+        
         a.render();
         b.render();
 

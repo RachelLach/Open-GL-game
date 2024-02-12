@@ -1,4 +1,5 @@
 #pragma once
+#include <corecrt_math.h>
 
 class Vector3
 {
@@ -31,5 +32,21 @@ public:
         // We do not use && cause it uses for bool and here is not a bool 
     }
 
-    
+    Vector3 operator-(const Vector3& other) const {
+        return Vector3(x - other.x, y - other.y, z - other.z);
+    }
+
+    Vector3 operator*(float k) const {
+        return Vector3(x * k, y * k, z * k);
+    }
+
+    Vector3 operator/(float k) const {
+        return Vector3(x / k, y / k, z / k);
+    }
+
+    float Magnitude() const {
+        return sqrt(x * x + y * y + z * z);
+    }
+
+
 };

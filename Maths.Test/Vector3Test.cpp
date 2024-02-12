@@ -34,11 +34,25 @@ TEST(Vector3_Negate, InvertsPositiveValues) {
 }
 
 // Test and implement adding operator 
-TEST(Vector3_Addition, Correctly_Sums_Up_Vector3) {
+TEST(Vector3_Addition, AddsUpAllValues) {
 	EXPECT_EQ(Vector3(3, 4, 5) + Vector3(2, 3, 6), Vector3(5,7,11));
 }
 
-TEST(Vector3_Division, Correctly_Devide_Vector3) {
-	EXPECT_EQ(Vector3(3, 4, 5) + Vector3(6, 8, 5), Vector3(0.5, 0.5, 1));
+TEST(Vector3_Subtraction, SubtractsAllValues) {
+	EXPECT_EQ(Vector3(3, 4, 5) - Vector3(2, 3, 6), Vector3(1, 1, -1));
+}
+
+TEST(Vector3_ScalarMultiplication, ScalesAllValues) {
+	EXPECT_EQ(Vector3(3, 4, 5)*2, Vector3(6, 8, 10));
+}
+
+TEST(Vector3_ScalarDivision, dividesAllValues) {
+	EXPECT_EQ(Vector3(6, 8, 10) / 2, Vector3(3, 4, 5));
+}
+
+TEST(Vector3_Magnitude, Returns_Correct_Magnitude_for_Non_Zero_Vectors) {
+	EXPECT_FLOAT_EQ(Vector3(3, 4, 0).Magnitude(), 5);
+	EXPECT_FLOAT_EQ(Vector3(3, 0, 0).Magnitude(), 3);
+	EXPECT_FLOAT_EQ(Vector3(5, -3, 2).Magnitude(), sqrt(38));
 }
 
